@@ -1,0 +1,55 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "NeuroShield Forensic API",
+    "description": "API specification for ISO/IEC 27037 digital evidence analysis, explainable AI diagnostics, and blockchain anchoring.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/openai": {
+      "post": {
+        "summary": "Analyze media evidence using GPT-4o vision & audio spectral models",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "evidenceType": { "type": "string", "enum": ["image", "video", "audio", "document"] },
+                  "sha256Hash": { "type": "string" },
+                  "evidenceData": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful forensic analysis response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "authenticityScore": { "type": "number" },
+                    "explanation": { "type": "string" },
+                    "courtAdmissibleCertificateId": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/export-report": {
+      "post": {
+        "summary": "Export ISO 27037 forensic certificate package",
+        "responses": {
+          "200": { "description": "Report package download payload" }
+        }
+      }
+    }
+  }
+}
