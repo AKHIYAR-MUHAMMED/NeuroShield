@@ -11,6 +11,7 @@ import { CourtCertificate } from '@/components/certificate/CourtCertificate';
 import { DatasetExplorer } from '@/components/datasets/DatasetExplorer';
 import { XaiModal } from '@/components/xai/XaiModal';
 import { OpenAiSettingsModal } from '@/components/openai/OpenAiSettingsModal';
+import { AstraSettingsModal } from '@/components/astra/AstraSettingsModal';
 import { EvidenceSample, SAMPLE_DATASETS } from '@/data/samples';
 import confetti from 'canvas-confetti';
 
@@ -21,6 +22,7 @@ export default function Home() {
   const [xaiSample, setXaiSample] = useState<EvidenceSample | null>(null);
   const [isXaiOpen, setIsXaiOpen] = useState<boolean>(false);
   const [isOpenAiSettingsOpen, setIsOpenAiSettingsOpen] = useState<boolean>(false);
+  const [isAstraSettingsOpen, setIsAstraSettingsOpen] = useState<boolean>(false);
 
   const handleAnalysisComplete = (result: EvidenceSample) => {
     setCustomResults(prev => [result, ...prev]);
@@ -59,6 +61,7 @@ export default function Home() {
           setActiveTab={setActiveTab}
           onQuickVerify={() => setActiveTab('scanner')}
           onOpenOpenAiSettings={() => setIsOpenAiSettingsOpen(true)}
+          onOpenAstraSettings={() => setIsAstraSettingsOpen(true)}
         />
 
         {/* Main Content Body */}
@@ -119,6 +122,12 @@ export default function Home() {
       <OpenAiSettingsModal
         isOpen={isOpenAiSettingsOpen}
         onClose={() => setIsOpenAiSettingsOpen(false)}
+      />
+
+      {/* DataStax Astra DB Settings Modal */}
+      <AstraSettingsModal
+        isOpen={isAstraSettingsOpen}
+        onClose={() => setIsAstraSettingsOpen(false)}
       />
 
       {/* Footer */}

@@ -8,9 +8,10 @@ interface NavbarProps {
   setActiveTab: (tab: string) => void;
   onQuickVerify?: () => void;
   onOpenOpenAiSettings?: () => void;
+  onOpenAstraSettings?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onQuickVerify, onOpenOpenAiSettings }) => {
+export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onQuickVerify, onOpenOpenAiSettings, onOpenAstraSettings }) => {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Shield },
     { id: 'scanner', label: 'Multi-Modal Scanner', icon: Cpu },
@@ -71,8 +72,19 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onQuick
             })}
           </nav>
 
-          {/* Right Action: OpenAI & Quick Scan */}
-          <div className="flex items-center space-x-2.5">
+          {/* Right Action: OpenAI, Astra DB & Quick Scan */}
+          <div className="flex items-center space-x-2">
+            {onOpenAstraSettings && (
+              <button
+                onClick={onOpenAstraSettings}
+                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 border border-purple-800/60 hover:border-purple-500/70 text-purple-300 transition-all shadow-sm"
+                title="Configure DataStax Astra DB Vector Index"
+              >
+                <Database className="w-3.5 h-3.5 text-purple-400" />
+                <span className="hidden sm:inline">Astra DB</span>
+              </button>
+            )}
+
             {onOpenOpenAiSettings && (
               <button
                 onClick={onOpenOpenAiSettings}

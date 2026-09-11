@@ -3,6 +3,7 @@
 import React from 'react';
 import { Shield, Cpu, Database, QrCode, FileCheck, ArrowRight, Zap, CheckCircle2, AlertTriangle, Activity, Lock, Layers, Eye, Sparkles } from 'lucide-react';
 import { SAMPLE_DATASETS, EvidenceSample } from '@/data/samples';
+import { AstraVectorSearch } from './astra/AstraVectorSearch';
 
 interface DashboardProps {
   setActiveTab: (tab: string) => void;
@@ -188,6 +189,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ setActiveTab, onSelectSamp
 
         </div>
       </div>
+
+      {/* DataStax Astra DB Vector Search Engine */}
+      <AstraVectorSearch />
 
       {/* Recent Forensic Scan Log */}
       <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
