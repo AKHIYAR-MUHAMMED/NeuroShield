@@ -56,7 +56,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center justify-between h-16">
 
           {/* Brand Logo & Tagline */}
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('dashboard')}>
+          <button
+            onClick={() => setActiveTab('dashboard')}
+            aria-label="NeuroShield Home Dashboard"
+            className="flex items-center space-x-3 cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-950 rounded-xl p-1"
+          >
             <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20">
               <Shield className="w-6 h-6 text-white" />
               <span className="absolute -top-1 -right-1 flex h-3 w-3">
@@ -77,10 +81,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 Digital Evidence & Deepfake Verification Platform
               </p>
             </div>
-          </div>
+          </button>
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex space-x-1">
+          <nav aria-label="Main Navigation" className="hidden md:flex space-x-1">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -88,7 +92,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  aria-label={item.label}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 ${
                     isActive
                       ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-400 border border-cyan-500/30 shadow-sm'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
