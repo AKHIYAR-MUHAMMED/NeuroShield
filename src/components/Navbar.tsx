@@ -10,6 +10,7 @@ interface NavbarProps {
   onQuickVerify?: () => void;
   onOpenOpenAiSettings?: () => void;
   onOpenAstraSettings?: () => void;
+  onOpenMultiLlmSettings?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -18,6 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onQuickVerify,
   onOpenOpenAiSettings,
   onOpenAstraSettings,
+  onOpenMultiLlmSettings,
 }) => {
   const [astraHealth, setAstraHealth] = useState<AstraHealthStatus | null>(null);
 
@@ -144,6 +146,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </>
               )}
             </button>
+
+            {/* 10 LLM Ensemble Settings */}
+            {onOpenMultiLlmSettings && (
+              <button
+                onClick={onOpenMultiLlmSettings}
+                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-950/80 border border-cyan-700/60 hover:border-cyan-500 text-cyan-300 transition-all"
+                title="Configure 10 LLM Backend Ensemble Bridge"
+              >
+                <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="hidden sm:inline">10 LLMs</span>
+              </button>
+            )}
 
             {/* OpenAI Settings */}
             {onOpenOpenAiSettings && (

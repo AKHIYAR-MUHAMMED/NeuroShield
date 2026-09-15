@@ -12,6 +12,9 @@ import { DatasetExplorer } from '@/components/datasets/DatasetExplorer';
 import { XaiModal } from '@/components/xai/XaiModal';
 import { OpenAiSettingsModal } from '@/components/openai/OpenAiSettingsModal';
 import { AstraSettingsModal } from '@/components/astra/AstraSettingsModal';
+import { MultiLlmSettingsModal } from '@/components/openai/MultiLlmSettingsModal';
+import { ExportAuditTrailModal } from '@/components/certificate/ExportAuditTrailModal';
+import { QRBadgeModal } from '@/components/certificate/QRBadgeModal';
 import { EvidenceSample, SAMPLE_DATASETS } from '@/data/samples';
 import confetti from 'canvas-confetti';
 
@@ -20,9 +23,14 @@ export default function Home() {
   const [customResults, setCustomResults] = useState<EvidenceSample[]>([]);
   const [selectedCertificateSample, setSelectedCertificateSample] = useState<EvidenceSample | null>(null);
   const [xaiSample, setXaiSample] = useState<EvidenceSample | null>(null);
+
+  // Modal State Controls
   const [isXaiOpen, setIsXaiOpen] = useState<boolean>(false);
   const [isOpenAiSettingsOpen, setIsOpenAiSettingsOpen] = useState<boolean>(false);
   const [isAstraSettingsOpen, setIsAstraSettingsOpen] = useState<boolean>(false);
+  const [isMultiLlmSettingsOpen, setIsMultiLlmSettingsOpen] = useState<boolean>(false);
+  const [isExportAuditTrailOpen, setIsExportAuditTrailOpen] = useState<boolean>(false);
+  const [isQrBadgeOpen, setIsQrBadgeOpen] = useState<boolean>(false);
 
   const handleAnalysisComplete = (result: EvidenceSample) => {
     setCustomResults(prev => [result, ...prev]);
@@ -51,10 +59,12 @@ export default function Home() {
     setIsXaiOpen(true);
   };
 
+  const activeSample = selectedCertificateSample || SAMPLE_DATASETS[0];
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 bg-cyber-grid flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-950">
       
-      {/* Top Bar */}
+      {/* Top Navigation Bar */}
       <div>
         <Navbar
           activeTab={activeTab}
@@ -62,6 +72,7 @@ export default function Home() {
           onQuickVerify={() => setActiveTab('scanner')}
           onOpenOpenAiSettings={() => setIsOpenAiSettingsOpen(true)}
           onOpenAstraSettings={() => setIsAstraSettingsOpen(true)}
+          onOpenMultiLlmSettings={() => setIsMultiLlmSettingsOpen(true)}
         />
 
         {/* Main Content Body */}
@@ -97,8 +108,10 @@ export default function Home() {
 
           {activeTab === 'certificate' && (
             <CourtCertificate
-              sample={selectedCertificateSample || SAMPLE_DATASETS[0]}
+              sample={activeSample}
               onBack={() => setActiveTab('dashboard')}
+              onExportAuditTrail={() => setIsExportAuditTrailOpen(true)}
+              onPrintBadgeTag={() => setIsQrBadgeOpen(true)}
             />
           )}
 
@@ -111,23 +124,50 @@ export default function Home() {
         </main>
       </div>
 
-      {/* XAI Modal */}
+      {/* Interactive Modals Suite */}
+      
+      {/* XAI Diagnostic Overlay Modal */}
       <XaiModal
         sample={xaiSample}
         isOpen={isXaiOpen}
         onClose={() => setIsXaiOpen(false)}
       />
 
-      {/* OpenAI Settings Modal */}
+      {/* OpenAI API Key & Model Settings Modal */}
       <OpenAiSettingsModal
         isOpen={isOpenAiSettingsOpen}
         onClose={() => setIsOpenAiSettingsOpen(false)}
       />
 
-      {/* DataStax Astra DB Settings Modal */}
+      {/* DataStax Astra DB Vector Settings Modal */}
       <AstraSettingsModal
         isOpen={isAstraSettingsOpen}
         onClose={() => setIsAstraSettingsOpen(false)}
+      />
+
+      {/* 10 LLM Backend Ensemble Bridge Settings Modal */}
+      <MultiLlmSettingsModal
+        isOpen={isMultiLlmSettingsOpen}
+        onClose={() => setIsMultiLlmSettingsOpen(false)}
+      />
+
+      {/* Export Forensic Evidence Audit Trail Modal */}
+      <ExportAuditTrailModal
+        isOpen={isExportAuditTrailOpen}
+        onClose={() => setIsExportAuditTrailOpen(false)}
+      />
+
+      {/* Court Evidence Tag QR Badge Modal */}
+      <QRBadgeModal
+        isOpen={isQrBadgeOpen}
+        onClose={() => setIsQrBadgeOpen(false)}
+        config={{
+          evidenceId: activeSample.id,
+          sha256Hash: activeSample.sha256Hash,
+          verdict: activeSample.authenticityScore >= 60 ? 'AUTHENTIC' : 'SYNTHETIC',
+          caseNumber: 'CASE-FRE-2026-904',
+          investigatorId: 'EXAMINER-NEURO-01',
+        }}
       />
 
       {/* Footer */}

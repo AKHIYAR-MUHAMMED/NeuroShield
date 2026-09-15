@@ -9,9 +9,16 @@ import QRCode from 'qrcode';
 interface CourtCertificateProps {
   sample: EvidenceSample;
   onBack?: () => void;
+  onExportAuditTrail?: () => void;
+  onPrintBadgeTag?: () => void;
 }
 
-export const CourtCertificate: React.FC<CourtCertificateProps> = ({ sample, onBack }) => {
+export const CourtCertificate: React.FC<CourtCertificateProps> = ({
+  sample,
+  onBack,
+  onExportAuditTrail,
+  onPrintBadgeTag,
+}) => {
   const [qrUrl, setQrUrl] = useState<string>('');
   const [testimonyData, setTestimonyData] = useState<OpenAiTestimonyResult | null>(null);
   const [loadingTestimony, setLoadingTestimony] = useState<boolean>(false);
@@ -42,7 +49,7 @@ export const CourtCertificate: React.FC<CourtCertificateProps> = ({ sample, onBa
     <div className="max-w-4xl mx-auto space-y-6">
       
       {/* Action Header */}
-      <div className="flex items-center justify-between print:hidden">
+      <div className="flex flex-wrap items-center justify-between gap-3 print:hidden">
         {onBack && (
           <button
             onClick={onBack}
@@ -52,7 +59,27 @@ export const CourtCertificate: React.FC<CourtCertificateProps> = ({ sample, onBa
           </button>
         )}
 
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-wrap items-center gap-3">
+          {onExportAuditTrail && (
+            <button
+              onClick={onExportAuditTrail}
+              className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-500/50 text-slate-300 font-bold text-xs flex items-center space-x-1.5 transition-all shadow-md"
+            >
+              <FileCheck className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Export Audit Trail (JSON/CSV)</span>
+            </button>
+          )}
+
+          {onPrintBadgeTag && (
+            <button
+              onClick={onPrintBadgeTag}
+              className="px-3.5 py-2 rounded-xl bg-slate-900 border border-emerald-500/50 hover:border-emerald-400 text-emerald-300 font-bold text-xs flex items-center space-x-1.5 transition-all shadow-md"
+            >
+              <QrCode className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Print Evidence Tag Badge</span>
+            </button>
+          )}
+
           <button
             onClick={handleGenerateTestimony}
             className="px-3.5 py-2 rounded-xl bg-slate-900 border border-cyan-500/50 hover:border-cyan-400 text-cyan-300 font-bold text-xs flex items-center space-x-1.5 shadow-lg"

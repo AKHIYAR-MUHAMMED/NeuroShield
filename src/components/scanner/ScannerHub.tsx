@@ -1,14 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Eye, Video, Mic, FileText, Cpu, Zap } from 'lucide-react';
+import { Eye, Video, Mic, FileText, Cpu, Zap, Activity, Layers } from 'lucide-react';
 import { ImageScanner } from './ImageScanner';
 import { VideoScanner } from './VideoScanner';
 import { AudioScanner } from './AudioScanner';
 import { DocumentScanner } from './DocumentScanner';
+import { AudioSpectrumVisualizer } from './AudioSpectrumVisualizer';
+import { BatchEvidenceUploader } from './BatchEvidenceUploader';
 import { EvidenceSample } from '@/data/samples';
 
-type ScanMode = 'image' | 'video' | 'audio' | 'document';
+type ScanMode = 'image' | 'video' | 'audio' | 'document' | 'spectrum' | 'batch';
 
 interface ScannerHubProps {
   onAnalysisComplete: (result: EvidenceSample) => void;
@@ -23,6 +25,8 @@ export const ScannerHub: React.FC<ScannerHubProps> = ({ onAnalysisComplete, onOp
     { id: 'video', label: 'Video Authenticity', icon: Video, desc: 'Temporal flow, keyframe scrubber' },
     { id: 'audio', label: 'Voice Clone Detection', icon: Mic, desc: 'Wav2Vec2, Mel-spectrogram' },
     { id: 'document', label: 'Document Tamper OCR', icon: FileText, desc: 'Font subsetting, PKCS#7 signature' },
+    { id: 'spectrum', label: 'Audio FFT Spectrum', icon: Activity, desc: '20Hz-20kHz harmonic breakdown' },
+    { id: 'batch', label: 'Batch Merkle Hasher', icon: Layers, desc: 'Multi-file evidence Merkle root' },
   ];
 
   return (
@@ -49,7 +53,7 @@ export const ScannerHub: React.FC<ScannerHubProps> = ({ onAnalysisComplete, onOp
       </div>
 
       {/* Mode Switcher Tabs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeMode === tab.id;
@@ -85,6 +89,8 @@ export const ScannerHub: React.FC<ScannerHubProps> = ({ onAnalysisComplete, onOp
         {activeMode === 'video' && <VideoScanner onAnalysisComplete={onAnalysisComplete} />}
         {activeMode === 'audio' && <AudioScanner onAnalysisComplete={onAnalysisComplete} />}
         {activeMode === 'document' && <DocumentScanner onAnalysisComplete={onAnalysisComplete} />}
+        {activeMode === 'spectrum' && <AudioSpectrumVisualizer autoSimulate={true} />}
+        {activeMode === 'batch' && <BatchEvidenceUploader />}
       </div>
 
     </div>

@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { EvidenceSample } from '@/data/samples';
 import { AstraVectorSearch } from './astra/AstraVectorSearch';
+import { LlmConsensusWidget } from './openai/LlmConsensusWidget';
 import { fetchEvidenceRecords } from '@/utils/astra';
 
 interface DashboardProps {
@@ -159,6 +160,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ setActiveTab, onSelectSamp
           })}
         </div>
       </div>
+
+      {/* 10-LLM Backend Ensemble Consensus Widget */}
+      <LlmConsensusWidget evidenceScore={85} />
 
       {/* DataStax Astra DB Vector Search */}
       <AstraVectorSearch />

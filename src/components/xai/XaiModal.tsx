@@ -154,7 +154,7 @@ export const XaiModal: React.FC<XaiModalProps> = ({ sample, isOpen, onClose }) =
               </button>
             </div>
 
-            {/* Slider */}
+            {/* Slider & Heatmap Controls */}
             {viewMode === 'gradcam' && (
               <div className="flex items-center space-x-3 text-xs w-full sm:w-auto">
                 <Sliders className="w-4 h-4 text-cyan-400" />
@@ -167,6 +167,7 @@ export const XaiModal: React.FC<XaiModalProps> = ({ sample, isOpen, onClose }) =
                   value={heatmapOpacity}
                   onChange={(e) => setHeatmapOpacity(parseFloat(e.target.value))}
                   className="w-28 accent-cyan-400 cursor-pointer"
+                  aria-label="Adjust heatmap opacity slider"
                 />
                 <span className="font-mono text-cyan-400 w-8">{Math.round(heatmapOpacity * 100)}%</span>
               </div>
