@@ -146,6 +146,22 @@ export const AstraSettingsModal: React.FC<AstraSettingsModalProps> = ({ isOpen, 
             <span className="font-mono text-cyan-400 font-bold">{config.vectorDimension} (OpenAI text-embedding-3-small)</span>
           </div>
 
+          {/* Astra DB Content Automation Section */}
+          <div className="bg-purple-950/40 p-3.5 rounded-xl border border-purple-500/30 space-y-2">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="font-bold text-xs text-purple-200 block">Automated Content Indexing</span>
+                <span className="text-[11px] text-slate-400">Automatically generate embeddings & index new scans to Astra DB</span>
+              </div>
+              <input
+                type="checkbox"
+                defaultChecked={true}
+                className="w-4 h-4 accent-purple-500 rounded cursor-pointer"
+                aria-label="Toggle automated Astra DB content indexing"
+              />
+            </div>
+          </div>
+
           {connectionStatus === 'success' && (
             <div className="p-3 bg-emerald-950/60 border border-emerald-500/50 rounded-xl text-emerald-300 text-xs flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />

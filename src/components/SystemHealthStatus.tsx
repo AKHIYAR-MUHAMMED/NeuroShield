@@ -6,6 +6,7 @@ import { Activity, Server, Cpu, Database, Wifi } from 'lucide-react';
 export const SystemHealthStatus: React.FC = () => {
   const nodes = [
     { name: 'Neural Inference Node 01 (GPU-A100)', status: 'OPERATIONAL', latency: '42ms', load: '34%' },
+    { name: 'DataStax Astra DB Vector Index (Auto-Sync)', status: 'AUTO-INDEXING', latency: '24ms', load: '12%' },
     { name: 'Blockchain Anchor Node (Mainnet)', status: 'OPERATIONAL', latency: '12ms', load: '18%' },
     { name: 'ISO/IEC 27037 Vault Storage', status: 'OPERATIONAL', latency: '8ms', load: '45%' },
     { name: 'OpenAI GPT-4o Forensics Bridge', status: 'OPERATIONAL', latency: '180ms', load: '62%' },
