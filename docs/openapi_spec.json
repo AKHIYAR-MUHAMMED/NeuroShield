@@ -50,6 +50,57 @@
           "200": { "description": "Report package download payload" }
         }
       }
+    },
+    "/api/evidence/batch-hash": {
+      "post": {
+        "summary": "Compute individual SHA-256 digests and cryptographic Merkle Root for batch evidence",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "content": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Merkle Root batch calculation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "batchId": { "type": "string" },
+                        "filesProcessed": { "type": "integer" },
+                        "merkleRootHash": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
+
