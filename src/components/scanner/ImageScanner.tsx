@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Upload, Eye, Cpu, Zap, CheckCircle2, AlertTriangle, ShieldCheck, RefreshCw, BarChart2 } from 'lucide-react';
 import { EvidenceSample } from '@/data/samples';
 import { calculateSHA256, generateBlockchainTxId } from '@/utils/crypto';
+import { insertEvidenceRecord, queryAstraVectorSimilarity, VectorSearchResult } from '@/utils/astra';
 
 interface ImageScannerProps {
   onAnalysisComplete: (result: EvidenceSample) => void;
@@ -17,6 +18,8 @@ export const ImageScanner: React.FC<ImageScannerProps> = ({ onAnalysisComplete, 
   const [analyzing, setAnalyzing] = useState<boolean>(false);
   const [analysisProgress, setAnalysisProgress] = useState<number>(0);
   const [statusStage, setStatusStage] = useState<string>('Initializing PyTorch Engine...');
+  const [astraSaveStatus, setAstraSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'fallback'>('idle');
+  const [topVectorMatch, setTopVectorMatch] = useState<VectorSearchResult | null>(null);
 
   const handleFileUpload = async (file: File) => {
     if (!file.type.startsWith('image/')) {
@@ -93,11 +96,50 @@ export const ImageScanner: React.FC<ImageScannerProps> = ({ onAnalysisComplete, 
       };
 
       onAnalysisComplete(newResult);
+
+      // Write to Astra DB (async IIFE inside setTimeout callback)
+      setAstraSaveStatus('saving');
+      (async () => {
+        const insertResult = await insertEvidenceRecord(newResult);
+        setAstraSaveStatus(insertResult.source === 'astra' ? 'saved' : 'fallback');
+
+        const vecResult = await queryAstraVectorSimilarity(newResult.sha256Hash, 1);
+        if (vecResult.success && vecResult.results.length > 0) {
+          setTopVectorMatch(vecResult.results[0]);
+        }
+      })();
     }, 2500);
   };
 
   return (
     <div className="space-y-6">
+      {/* Astra DB Save Badge */}
+      {(astraSaveStatus === 'saved' || astraSaveStatus === 'fallback') && (
+        <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-xs font-semibold ${
+          astraSaveStatus === 'saved'
+            ? 'bg-purple-950/60 border-purple-700/50 text-purple-300'
+            : 'bg-amber-950/60 border-amber-700/50 text-amber-300'
+        }`}>
+          {astraSaveStatus === 'saved' ? (
+            <><CheckCircle2 className="w-4 h-4 text-purple-400" /> Evidence record saved to DataStax Astra DB vector index ✓</>
+          ) : (
+            <><AlertTriangle className="w-4 h-4 text-amber-400" /> Saved to local fallback cache (configure Astra token for live mode)</>
+          )}
+        </div>
+      )}
+      {astraSaveStatus === 'saving' && (
+        <div className="flex items-center gap-2 px-4 py-2 rounded-xl border bg-purple-950/30 border-purple-800/30 text-purple-400 text-xs font-semibold animate-pulse">
+          <RefreshCw className="w-4 h-4 animate-spin" /> Saving evidence to Astra DB…
+        </div>
+      )}
+      {/* Nearest Vector Match */}
+      {topVectorMatch && (
+        <div className="bg-slate-950 border border-purple-700/40 rounded-xl p-3 text-xs">
+          <p className="text-purple-300 font-semibold mb-1">🔍 Nearest Astra DB Vector Match ({(topVectorMatch.similarityScore * 100).toFixed(1)}% similarity)</p>
+          <p className="text-slate-300">{topVectorMatch.sampleTitle}</p>
+          <p className="text-slate-500 font-mono">{topVectorMatch.metadata.datasetOrigin} · {topVectorMatch.threatLevel.replace('_', ' ')}</p>
+        </div>
+      )}
       
       {/* Upload Drop Zone */}
       {!previewUrl ? (

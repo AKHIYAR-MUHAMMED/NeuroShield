@@ -5,6 +5,7 @@ import { FileText, AlertTriangle, FileCheck, RefreshCw, Sparkles } from 'lucide-
 import { EvidenceSample } from '@/data/samples';
 import { calculateSHA256, generateBlockchainTxId } from '@/utils/crypto';
 import { requestOpenAiAnalysis, OpenAiSyntheticTextResult } from '@/utils/openai';
+import { insertEvidenceRecord } from '@/utils/astra';
 
 interface DocumentScannerProps {
   onAnalysisComplete: (result: EvidenceSample) => void;
@@ -69,6 +70,8 @@ export const DocumentScanner: React.FC<DocumentScannerProps> = ({ onAnalysisComp
       };
 
       onAnalysisComplete(newResult);
+      // Persist to Astra DB
+      insertEvidenceRecord(newResult).catch(() => {});
     }
   };
 
@@ -118,6 +121,8 @@ export const DocumentScanner: React.FC<DocumentScannerProps> = ({ onAnalysisComp
       };
 
       onAnalysisComplete(newResult);
+      // Persist to Astra DB
+      insertEvidenceRecord(newResult).catch(() => {});
     }, 1700);
   };
 

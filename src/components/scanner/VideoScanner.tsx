@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Upload, Video, Play, Pause, AlertTriangle, CheckCircle2, Film, RefreshCw, BarChart2 } from 'lucide-react';
 import { EvidenceSample } from '@/data/samples';
 import { calculateSHA256, generateBlockchainTxId } from '@/utils/crypto';
+import { insertEvidenceRecord } from '@/utils/astra';
 
 interface VideoScannerProps {
   onAnalysisComplete: (result: EvidenceSample) => void;
@@ -77,6 +78,8 @@ export const VideoScanner: React.FC<VideoScannerProps> = ({ onAnalysisComplete }
       };
 
       onAnalysisComplete(newResult);
+      // Persist to Astra DB
+      insertEvidenceRecord(newResult).catch(() => {});
     }, 2200);
   };
 

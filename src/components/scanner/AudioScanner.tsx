@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Upload, Mic, Play, Pause, AlertTriangle, CheckCircle2, Volume2, RefreshCw, Activity } from 'lucide-react';
 import { EvidenceSample } from '@/data/samples';
 import { calculateSHA256, generateBlockchainTxId } from '@/utils/crypto';
+import { insertEvidenceRecord } from '@/utils/astra';
 
 interface AudioScannerProps {
   onAnalysisComplete: (result: EvidenceSample) => void;
@@ -73,6 +74,8 @@ export const AudioScanner: React.FC<AudioScannerProps> = ({ onAnalysisComplete }
       };
 
       onAnalysisComplete(newResult);
+      // Persist to Astra DB
+      insertEvidenceRecord(newResult).catch(() => {});
     }, 1800);
   };
 
