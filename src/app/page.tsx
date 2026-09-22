@@ -9,6 +9,7 @@ import { BlockchainLedger } from '@/components/blockchain/BlockchainLedger';
 import { QrVerifier } from '@/components/blockchain/QrVerifierModal';
 import { CourtCertificate } from '@/components/certificate/CourtCertificate';
 import { DatasetExplorer } from '@/components/datasets/DatasetExplorer';
+import { RealWorldComparisons } from '@/components/comparisons/RealWorldComparisons';
 import { XaiModal } from '@/components/xai/XaiModal';
 import { OpenAiSettingsModal } from '@/components/openai/OpenAiSettingsModal';
 import { AstraSettingsModal } from '@/components/astra/AstraSettingsModal';
@@ -89,6 +90,14 @@ export default function Home() {
             <ScannerHub
               onAnalysisComplete={handleAnalysisComplete}
               onOpenXai={handleOpenXai}
+            />
+          )}
+
+          {activeTab === 'comparisons' && (
+            <RealWorldComparisons
+              onSelectSample={handleSelectSample}
+              onOpenXai={handleOpenXai}
+              onNavigateScanner={() => setActiveTab('scanner')}
             />
           )}
 
