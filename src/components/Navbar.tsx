@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Shield, Cpu, Database, QrCode, FileCheck, Layers, Activity, Sparkles, Wifi, WifiOff } from 'lucide-react';
+import { Shield, Cpu, Database, QrCode, FileCheck, Layers, Activity, Sparkles, Wifi, WifiOff, Scale } from 'lucide-react';
 import { pingAstraHealth, AstraHealthStatus } from '@/utils/astra';
 
 interface NavbarProps {
@@ -26,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Shield },
     { id: 'scanner', label: 'Multi-Modal Scanner', icon: Cpu },
+    { id: 'comparisons', label: 'Real vs AI Comparisons', icon: Scale },
     { id: 'ledger', label: 'Blockchain Ledger', icon: Database },
     { id: 'verifier', label: 'QR Hash Verifier', icon: QrCode },
     { id: 'certificate', label: 'Court Certificate', icon: FileCheck },
