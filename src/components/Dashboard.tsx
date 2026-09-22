@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   Shield, Cpu, Database, QrCode, FileCheck, ArrowRight, Zap,
-  CheckCircle2, Activity, Layers, Eye, Sparkles, RefreshCw
+  CheckCircle2, Activity, Layers, Eye, Sparkles, RefreshCw, Scale
 } from 'lucide-react';
 import { EvidenceSample } from '@/data/samples';
 import { AstraVectorSearch } from './astra/AstraVectorSearch';
@@ -67,6 +67,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ setActiveTab, onSelectSamp
             >
               <Cpu className="w-5 h-5" />
               <span>Start Multi-Modal Scan</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('comparisons')}
+              className="px-6 py-3 rounded-xl bg-purple-950/90 hover:bg-purple-900 border border-purple-700/80 text-purple-200 font-extrabold text-sm flex items-center space-x-2 shadow-lg shadow-purple-950/40 transition transform hover:scale-105"
+            >
+              <Scale className="w-5 h-5 text-purple-400" />
+              <span>Real vs AI Comparisons</span>
             </button>
             <button
               onClick={() => setActiveTab('verifier')}
