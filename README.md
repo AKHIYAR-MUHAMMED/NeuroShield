@@ -44,6 +44,11 @@ Analyzes digital evidence across four primary media domains:
 - **Interactive PDF / Printable Certificate**: Includes legal evidence summary, cryptographic hash, block confirmation, and authorized signatory blocks.
 - **Embedded QR Authenticator**: Generates dynamic QR codes allowing judges, opposing counsel, or auditors to instantly verify certificate validity on-chain.
 
+### ⚖️ SOTA Real-World Comparison Suite
+- **Interactive Split-Screen Draggable Visualizer**: Compare authentic hardware baselines against SOTA AI generators (Midjourney v6, OpenAI Sora, ElevenLabs v2, ChatGPT-4o PDF).
+- **Exact Mathematical Forensic Deltas**: Spatial ELA, FFT high-frequency energy ceiling, rPPG subcutaneous blood flow, and PRNU CMOS sensor noise fingerprinting.
+- **Enterprise Competitor Matrix**: Evaluated side-by-side against Reality Defender, Hive AI, Sensity AI, Intel FakeCatcher, and Microsoft Video Authenticator.
+
 ### 📊 Benchmark Dataset Explorer
 - Integrated reference datasets including **FaceForensics++**, **Celeb-DF**, **DFDC Challenge**, **ASVspoof 2024**, and **DocTamper Benchmark**.
 
