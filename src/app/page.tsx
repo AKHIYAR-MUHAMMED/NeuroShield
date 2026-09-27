@@ -10,6 +10,7 @@ import { QrVerifier } from '@/components/blockchain/QrVerifierModal';
 import { CourtCertificate } from '@/components/certificate/CourtCertificate';
 import { DatasetExplorer } from '@/components/datasets/DatasetExplorer';
 import { RealWorldComparisons } from '@/components/comparisons/RealWorldComparisons';
+import { MultiLlmMeshHub } from '@/components/openai/MultiLlmMeshHub';
 import { XaiModal } from '@/components/xai/XaiModal';
 import { OpenAiSettingsModal } from '@/components/openai/OpenAiSettingsModal';
 import { AstraSettingsModal } from '@/components/astra/AstraSettingsModal';
@@ -91,6 +92,10 @@ export default function Home() {
               onAnalysisComplete={handleAnalysisComplete}
               onOpenXai={handleOpenXai}
             />
+          )}
+
+          {activeTab === 'llm-mesh' && (
+            <MultiLlmMeshHub />
           )}
 
           {activeTab === 'comparisons' && (

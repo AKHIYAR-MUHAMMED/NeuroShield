@@ -169,7 +169,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ setActiveTab, onSelectSamp
       </div>
 
       {/* 10-LLM Backend Ensemble Consensus Widget */}
-      <LlmConsensusWidget evidenceScore={85} />
+      <LlmConsensusWidget evidenceScore={85} onNavigateMesh={() => setActiveTab('llm-mesh')} />
 
       {/* DataStax Astra DB Vector Search */}
       <AstraVectorSearch />
