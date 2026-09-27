@@ -11,6 +11,9 @@ import { CourtCertificate } from '@/components/certificate/CourtCertificate';
 import { DatasetExplorer } from '@/components/datasets/DatasetExplorer';
 import { RealWorldComparisons } from '@/components/comparisons/RealWorldComparisons';
 import { MultiLlmMeshHub } from '@/components/openai/MultiLlmMeshHub';
+import { ForensicSpectrumViewer } from '@/components/forensics/ForensicSpectrumViewer';
+import { CaseManagementHub } from '@/components/cases/CaseManagementHub';
+import { CyberCommandPalette } from '@/components/command/CyberCommandPalette';
 import { XaiModal } from '@/components/xai/XaiModal';
 import { OpenAiSettingsModal } from '@/components/openai/OpenAiSettingsModal';
 import { AstraSettingsModal } from '@/components/astra/AstraSettingsModal';
@@ -33,6 +36,7 @@ export default function Home() {
   const [isMultiLlmSettingsOpen, setIsMultiLlmSettingsOpen] = useState<boolean>(false);
   const [isExportAuditTrailOpen, setIsExportAuditTrailOpen] = useState<boolean>(false);
   const [isQrBadgeOpen, setIsQrBadgeOpen] = useState<boolean>(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
 
   const handleAnalysisComplete = (result: EvidenceSample) => {
     setCustomResults(prev => [result, ...prev]);
@@ -75,6 +79,7 @@ export default function Home() {
           onOpenOpenAiSettings={() => setIsOpenAiSettingsOpen(true)}
           onOpenAstraSettings={() => setIsAstraSettingsOpen(true)}
           onOpenMultiLlmSettings={() => setIsMultiLlmSettingsOpen(true)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
         />
 
         {/* Main Content Body */}
@@ -96,6 +101,16 @@ export default function Home() {
 
           {activeTab === 'llm-mesh' && (
             <MultiLlmMeshHub />
+          )}
+
+          {activeTab === 'spectrum' && (
+            <ForensicSpectrumViewer />
+          )}
+
+          {activeTab === 'cases' && (
+            <CaseManagementHub
+              onSelectSample={handleSelectSample}
+            />
           )}
 
           {activeTab === 'comparisons' && (
@@ -182,6 +197,13 @@ export default function Home() {
           caseNumber: 'CASE-FRE-2026-904',
           investigatorId: 'EXAMINER-NEURO-01',
         }}
+      />
+
+      {/* Cyber Command Palette (Ctrl+K Modal) */}
+      <CyberCommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        setActiveTab={setActiveTab}
       />
 
       {/* Footer */}

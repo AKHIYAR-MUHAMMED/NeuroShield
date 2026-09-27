@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Shield, Cpu, Database, QrCode, FileCheck, Layers, Activity, Sparkles, Wifi, WifiOff, Scale, Brain, Radio } from 'lucide-react';
+import { Shield, Cpu, Database, QrCode, FileCheck, Layers, Activity, Sparkles, Wifi, WifiOff, Scale, Brain, Radio, Briefcase, Command } from 'lucide-react';
 import { pingAstraHealth, AstraHealthStatus } from '@/utils/astra';
 
 interface NavbarProps {
@@ -11,6 +11,7 @@ interface NavbarProps {
   onOpenOpenAiSettings?: () => void;
   onOpenAstraSettings?: () => void;
   onOpenMultiLlmSettings?: () => void;
+  onOpenCommandPalette?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -20,18 +21,21 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenOpenAiSettings,
   onOpenAstraSettings,
   onOpenMultiLlmSettings,
+  onOpenCommandPalette,
 }) => {
   const [astraHealth, setAstraHealth] = useState<AstraHealthStatus | null>(null);
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Shield },
     { id: 'scanner', label: 'Multi-Modal Scanner', icon: Cpu },
-    { id: 'llm-mesh', label: '10-LLM Neural Mesh', icon: Brain, badge: '10 LLMs' },
-    { id: 'comparisons', label: 'Real vs AI Comparisons', icon: Scale },
-    { id: 'ledger', label: 'Blockchain Ledger', icon: Database },
-    { id: 'verifier', label: 'QR Hash Verifier', icon: QrCode },
+    { id: 'llm-mesh', label: '10-LLM Mesh', icon: Brain, badge: '10 LLMs' },
+    { id: 'spectrum', label: 'Forensic Spectrum', icon: Activity },
+    { id: 'cases', label: 'Case Custody', icon: Briefcase },
+    { id: 'comparisons', label: 'Real vs AI', icon: Scale },
+    { id: 'ledger', label: 'Ledger', icon: Database },
+    { id: 'verifier', label: 'QR Verifier', icon: QrCode },
     { id: 'certificate', label: 'Court Certificate', icon: FileCheck },
-    { id: 'datasets', label: 'Benchmark Datasets', icon: Layers },
+    { id: 'datasets', label: 'Datasets', icon: Layers },
   ];
 
   // Poll Astra health every 30 seconds
@@ -153,6 +157,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </>
               )}
             </button>
+
+            {/* Command Palette Button (Ctrl + K) */}
+            {onOpenCommandPalette && (
+              <button
+                onClick={onOpenCommandPalette}
+                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-200 transition-all"
+                title="Open Cyber Command Palette (Ctrl+K)"
+              >
+                <Command className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="hidden sm:inline">Ctrl+K</span>
+              </button>
+            )}
 
             {/* 10 LLM Ensemble Settings */}
             {onOpenMultiLlmSettings && (
