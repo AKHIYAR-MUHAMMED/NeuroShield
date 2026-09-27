@@ -141,16 +141,63 @@
 @keyframes hologram-glow {
   0%, 100% {
     border-color: rgba(0, 242, 254, 0.5);
-    box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
   }
   50% {
-    border-color: rgba(168, 85, 247, 0.6);
-    box-shadow: 0 0 35px rgba(168, 85, 247, 0.35);
+    border-color: rgba(168, 85, 247, 0.7);
+    box-shadow: 0 0 45px rgba(168, 85, 247, 0.4);
   }
 }
 
 .animate-hologram-glow {
   animation: hologram-glow 3s infinite ease-in-out;
+}
+
+/* 3D Perspective & Depth FX */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.card-3d-tilt {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px);
+}
+
+.card-3d-tilt:hover {
+  transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) translateZ(12px);
+  box-shadow: 0 20px 40px -10px rgba(0, 242, 254, 0.25), 0 0 30px rgba(168, 85, 247, 0.2);
+}
+
+/* 3D Holographic Orbit Rotation */
+@keyframes orbit-3d {
+  0% {
+    transform: rotateX(60deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(60deg) rotateZ(360deg);
+  }
+}
+
+.animate-orbit-3d {
+  animation: orbit-3d 12s linear infinite;
+}
+
+/* Glowing Neon Text Pulse */
+@keyframes neon-text-pulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.8), 0 0 20px rgba(0, 242, 254, 0.4);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.9), 0 0 30px rgba(168, 85, 247, 0.5);
+  }
+}
+
+.glow-text-neon {
+  animation: neon-text-pulse 3s ease-in-out infinite;
 }
 
 /* Custom Scrollbars */

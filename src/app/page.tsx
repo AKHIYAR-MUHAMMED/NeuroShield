@@ -11,6 +11,7 @@ import { CourtCertificate } from '@/components/certificate/CourtCertificate';
 import { DatasetExplorer } from '@/components/datasets/DatasetExplorer';
 import { RealWorldComparisons } from '@/components/comparisons/RealWorldComparisons';
 import { MultiLlmMeshHub } from '@/components/openai/MultiLlmMeshHub';
+import { ThreeDForensicVisualizer } from '@/components/forensics/ThreeDForensicVisualizer';
 import { ForensicSpectrumViewer } from '@/components/forensics/ForensicSpectrumViewer';
 import { CaseManagementHub } from '@/components/cases/CaseManagementHub';
 import { CyberCommandPalette } from '@/components/command/CyberCommandPalette';
@@ -101,6 +102,10 @@ export default function Home() {
 
           {activeTab === 'llm-mesh' && (
             <MultiLlmMeshHub />
+          )}
+
+          {activeTab === '3d-hologram' && (
+            <ThreeDForensicVisualizer />
           )}
 
           {activeTab === 'spectrum' && (
