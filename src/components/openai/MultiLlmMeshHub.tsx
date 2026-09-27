@@ -25,6 +25,7 @@ import {
   getLlmProviders,
   saveLlmProviderConfig,
   calculateMultiLlmConsensusScore,
+  DEFAULT_10_LLM_PROVIDERS,
   LlmProvider,
   MultiLlmConsensusResult,
 } from '@/utils/llmRouter';
@@ -61,7 +62,7 @@ const SAMPLE_PROMPTS = [
 ];
 
 export const MultiLlmMeshHub: React.FC = () => {
-  const [providers, setProviders] = useState<LlmProvider[]>([]);
+  const [providers, setProviders] = useState<LlmProvider[]>(DEFAULT_10_LLM_PROVIDERS);
   const [selectedPrompt, setSelectedPrompt] = useState(SAMPLE_PROMPTS[0]);
   const [isSimulating, setIsSimulating] = useState(false);
   const [activeModelId, setActiveModelId] = useState<string | null>('deepseek');
@@ -121,7 +122,7 @@ export const MultiLlmMeshHub: React.FC = () => {
     }
   };
 
-  const selectedModel = providers.find((p) => p.id === activeModelId) || providers[0];
+  const selectedModel = providers.find((p) => p.id === activeModelId) || providers[0] || DEFAULT_10_LLM_PROVIDERS[0];
 
   return (
     <div className="space-y-8 animate-fadeIn">
