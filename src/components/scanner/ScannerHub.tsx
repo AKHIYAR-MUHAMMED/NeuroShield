@@ -8,9 +8,10 @@ import { AudioScanner } from './AudioScanner';
 import { DocumentScanner } from './DocumentScanner';
 import { AudioSpectrumVisualizer } from './AudioSpectrumVisualizer';
 import { BatchEvidenceUploader } from './BatchEvidenceUploader';
+import { OpenAiNeuralLaserVisualizer } from '../openai/OpenAiNeuralLaserVisualizer';
 import { EvidenceSample } from '@/data/samples';
 
-type ScanMode = 'image' | 'video' | 'audio' | 'document' | 'spectrum' | 'batch';
+type ScanMode = 'image' | 'video' | 'audio' | 'document' | 'spectrum' | 'batch' | 'openai-laser';
 
 interface ScannerHubProps {
   onAnalysisComplete: (result: EvidenceSample) => void;
@@ -25,6 +26,7 @@ export const ScannerHub: React.FC<ScannerHubProps> = ({ onAnalysisComplete, onOp
     { id: 'video', label: 'Video Authenticity', icon: Video, desc: 'Temporal flow, keyframe scrubber' },
     { id: 'audio', label: 'Voice Clone Detection', icon: Mic, desc: 'Wav2Vec2, Mel-spectrogram' },
     { id: 'document', label: 'Document Tamper OCR', icon: FileText, desc: 'Font subsetting, PKCS#7 signature' },
+    { id: 'openai-laser', label: 'OpenAI GPT-4o Laser', icon: Zap, desc: '60 FPS Laser & Quantum Particle FX' },
     { id: 'spectrum', label: 'Audio FFT Spectrum', icon: Activity, desc: '20Hz-20kHz harmonic breakdown' },
     { id: 'batch', label: 'Batch Merkle Hasher', icon: Layers, desc: 'Multi-file evidence Merkle root' },
   ];
@@ -48,12 +50,12 @@ export const ScannerHub: React.FC<ScannerHubProps> = ({ onAnalysisComplete, onOp
 
         <div className="flex items-center space-x-2 text-xs bg-slate-950 px-3 py-1.5 rounded-full border border-slate-800 text-cyan-400">
           <Zap className="w-3.5 h-3.5" />
-          <span>PyTorch Ensemble Active</span>
+          <span>PyTorch + OpenAI Ensemble Active</span>
         </div>
       </div>
 
       {/* Mode Switcher Tabs */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeMode === tab.id;
@@ -61,14 +63,14 @@ export const ScannerHub: React.FC<ScannerHubProps> = ({ onAnalysisComplete, onOp
             <button
               key={tab.id}
               onClick={() => setActiveMode(tab.id)}
-              className={`p-4 rounded-2xl border text-left transition-all duration-200 ${
+              className={`p-3.5 rounded-2xl border text-left transition-all duration-200 ${
                 isActive
                   ? 'bg-gradient-to-br from-cyan-950/80 to-slate-900 border-cyan-500/50 shadow-lg shadow-cyan-500/10'
                   : 'bg-slate-950/60 border-slate-800 hover:bg-slate-900 hover:border-slate-700'
               }`}
             >
               <div className="flex items-center space-x-2">
-                <div className={`p-2 rounded-xl ${isActive ? 'bg-cyan-500 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'}`}>
+                <div className={`p-1.5 rounded-xl ${isActive ? 'bg-cyan-500 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'}`}>
                   <Icon className="w-4 h-4" />
                 </div>
                 <span className={`font-bold text-xs ${isActive ? 'text-cyan-400' : 'text-slate-200'}`}>
@@ -89,6 +91,7 @@ export const ScannerHub: React.FC<ScannerHubProps> = ({ onAnalysisComplete, onOp
         {activeMode === 'video' && <VideoScanner onAnalysisComplete={onAnalysisComplete} />}
         {activeMode === 'audio' && <AudioScanner onAnalysisComplete={onAnalysisComplete} />}
         {activeMode === 'document' && <DocumentScanner onAnalysisComplete={onAnalysisComplete} />}
+        {activeMode === 'openai-laser' && <OpenAiNeuralLaserVisualizer />}
         {activeMode === 'spectrum' && <AudioSpectrumVisualizer autoSimulate={true} />}
         {activeMode === 'batch' && <BatchEvidenceUploader />}
       </div>

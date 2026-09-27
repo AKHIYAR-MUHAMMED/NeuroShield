@@ -80,6 +80,43 @@
   animation: scanline 4s linear infinite;
 }
 
+/* Fast Laser Beam Sweep */
+@keyframes laser-sweep {
+  0% {
+    top: 0%;
+    opacity: 0.9;
+    box-shadow: 0 0 15px #00f2fe, 0 0 30px #00f2fe;
+  }
+  50% {
+    top: 100%;
+    opacity: 0.9;
+    box-shadow: 0 0 25px #f43f5e, 0 0 45px #f43f5e;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.9;
+    box-shadow: 0 0 15px #00f2fe, 0 0 30px #00f2fe;
+  }
+}
+
+.animate-laser {
+  animation: laser-sweep 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Holographic Quantum Particle Float */
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(180deg);
+  }
+}
+
+.animate-float-particle {
+  animation: float-particle 4s ease-in-out infinite;
+}
+
 /* Pulse radar ring */
 @keyframes pulse-ring {
   0% {
@@ -98,6 +135,22 @@
 
 .animate-radar {
   animation: pulse-ring 3s infinite ease-in-out;
+}
+
+/* Glowing Hologram Border */
+@keyframes hologram-glow {
+  0%, 100% {
+    border-color: rgba(0, 242, 254, 0.5);
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+  }
+  50% {
+    border-color: rgba(168, 85, 247, 0.6);
+    box-shadow: 0 0 35px rgba(168, 85, 247, 0.35);
+  }
+}
+
+.animate-hologram-glow {
+  animation: hologram-glow 3s infinite ease-in-out;
 }
 
 /* Custom Scrollbars */
