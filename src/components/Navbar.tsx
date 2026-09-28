@@ -30,6 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'scanner', label: 'Multi-Modal Scanner', icon: Cpu },
     { id: 'llm-mesh', label: '10-LLM Mesh', icon: Brain, badge: '10 LLMs' },
     { id: '3d-hologram', label: '3D Hologram', icon: Box, badge: '3D FX' },
+    { id: 'scroll-showcase', label: 'Scroll Motion', icon: Sparkles, badge: 'REAL-LIFE' },
     { id: 'spectrum', label: 'Forensic Spectrum', icon: Activity },
     { id: 'cases', label: 'Case Custody', icon: Briefcase },
     { id: 'comparisons', label: 'Real vs AI', icon: Scale },

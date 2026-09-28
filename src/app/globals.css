@@ -200,6 +200,74 @@
   animation: neon-text-pulse 3s ease-in-out infinite;
 }
 
+/* Scroll Reveal Animations & Domain Themes */
+@keyframes scroll-reveal-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+.animate-scroll-reveal {
+  animation: scroll-reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulse-beam {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleX(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.02);
+  }
+}
+
+.animate-pulse-beam {
+  animation: pulse-beam 2.5s ease-in-out infinite;
+}
+
+/* Domain Accent Themes */
+.theme-image-cyan {
+  --domain-color: #00f2fe;
+  --domain-glow: rgba(0, 242, 254, 0.35);
+  border-color: rgba(0, 242, 254, 0.4);
+}
+
+.theme-video-rose {
+  --domain-color: #f43f5e;
+  --domain-glow: rgba(244, 63, 94, 0.35);
+  border-color: rgba(244, 63, 94, 0.4);
+}
+
+.theme-audio-emerald {
+  --domain-color: #10b981;
+  --domain-glow: rgba(16, 185, 129, 0.35);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.theme-document-purple {
+  --domain-color: #c084fc;
+  --domain-glow: rgba(192, 132, 252, 0.35);
+  border-color: rgba(192, 132, 252, 0.4);
+}
+
+.theme-blockchain-amber {
+  --domain-color: #f59e0b;
+  --domain-glow: rgba(245, 158, 11, 0.35);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+/* Scroll Progress Bar Glow */
+.scroll-progress-bar {
+  background: linear-gradient(90deg, #00f2fe 0%, #a855f7 50%, #f43f5e 100%);
+  box-shadow: 0 0 15px #00f2fe, 0 0 25px #a855f7;
+}
+
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
